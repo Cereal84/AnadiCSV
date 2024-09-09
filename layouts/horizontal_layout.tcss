@@ -1,0 +1,58 @@
+Screen {
+    layout: horizontal;
+}
+
+
+DataContainer {
+    layout: vertical;
+}
+
+
+CommandContainer {
+    layout: horizontal;
+}
+
+
+.box {
+    height: 100%;
+    width: 1fr;
+    border: solid white;
+}
+
+.box_tree {
+    height: 100%;
+    width: 30%;
+    border: solid white;
+}
+
+.history_item {
+    padding: 2;
+
+}
+
+.btn_run {
+    dock: right;
+    border: none;
+    height: 1;
+}
+
+.btn_export {
+    border: none;
+    height: 1;
+}
+
+
+.sidebar {
+    width: 30%;
+}
+
+.box_csv_tree {
+    height: 50%;
+    border: solid white;
+}
+
+.box_schema {
+    height: 35%;
+    border: solid white;
+}
+

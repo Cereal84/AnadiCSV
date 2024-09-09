@@ -1,0 +1,11 @@
+{
+   "version": 1,
+   "history": { 
+       "filename": "./history.json",
+       "size": 20
+   }, 
+   "custom_confs": {
+       "pokemon.csv": "/Users/apisched/"
+   },
+   "default_conf": "conf/csv/defaultdb.json"
+}

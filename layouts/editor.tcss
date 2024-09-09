@@ -1,0 +1,30 @@
+
+
+EditorWidget > Vertical {
+    width: 100%;
+    border: solid orange;
+}
+
+
+EditorWidget > Vertical > Horizontal {
+    width: 100%;
+    border: solid green;
+}
+
+
+.buttons {
+    width: 100%;
+    height: auto;
+    border: solit red;
+}
+
+
+.btn_edit {
+     width: 1fr;
+     dock: left;
+}
+
+.btn_save {
+     dock: right;
+     width: 1fr;
+}

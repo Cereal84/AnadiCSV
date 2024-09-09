@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "AnadiCSV"
+version = "0.1.0"
+description = "Query CSV files from your terminal."
+authors = ["Alessandro Pischedda <alessandro.pischedda@gmail.com>"]
+license = "MIT"
+# homepage = ""
+# repository = ""
+readme = "README.md"
+keywords = ["csv", "sql", "query"]
+packages = [
+    { include = "anadi"}
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<4.0.0"
+
+# textual and component libraries
+textual = "==0.75.0"
+pydantic = "==2.8.2"
+
+[tool.poetry.scripts]
+anadi = "anadi.__main__:run"

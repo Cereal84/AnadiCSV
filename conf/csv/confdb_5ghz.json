@@ -1,0 +1,10 @@
+{
+   "table_name": "powertable5g",
+   "conf": {
+       "header": true,
+       "delim": ",",
+       "skip": 1,
+       "normalize_names": true,
+       "names": []
+   }
+}

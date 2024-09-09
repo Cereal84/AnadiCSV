@@ -1,0 +1,7 @@
+{
+   "header": true,
+   "delim": ",",
+   "skip": 1,
+   "normalize_names": true,
+   "names": ["Frequency"]
+}

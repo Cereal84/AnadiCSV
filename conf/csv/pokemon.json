@@ -1,0 +1,10 @@
+{
+   "table_name": "tablename",
+   "conf": {
+       "header": true,
+       "delim": ",",
+       "skip": 0,
+       "normalize_names": true,
+       "names": ["id", "name"]
+   }
+}

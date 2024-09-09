@@ -1,0 +1,6 @@
+duckdb
+pydantic
+prettytable
+textual
+textual[syntax]
+jsonschema

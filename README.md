@@ -23,7 +23,7 @@ $ ./install.sh
 ### Help
 
 ```shell
-$ anadi -h
+$ ./anadi.sh -h
 usage: AnadiCSV [-h] -d DIR
 
 Handle csv file using SQL language
@@ -38,12 +38,12 @@ options:
 By default anadi use te current folder to find CSV files
 
 ```shell
-anadi
+./anadi.sh
 ```
 
 if your files are in a different location use *-d* options
 
 
 ```shell
-anadi -d DATA_DIR
+./anadi.sh -d DATA_DIR
 ```

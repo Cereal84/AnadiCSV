@@ -111,9 +111,7 @@ class ConfEditorWidget(Static):
                 Rule(),
                 Horizontal(
                     Button("Edit", id="btn_edit", variant="warning", classes="btn_edit"),
-
                     Button("Save", id="btn_save", variant="success", disabled=True, classes="btn_save"),
-                    #Button("Save as", id="btn_save_as", variant="success", disabled=True, classes="btn")
                 ),
                 id="configuration_data",
                 classes="configuration_data"
@@ -237,7 +235,6 @@ class ConfEditorWidget(Static):
     def on_edit_btn_click(self):
         # enable Save button
         self._toggle_button("btn_save")
-        self._toggle_button("btn_save_as")
 
         # disable Edit button
         self._toggle_button("btn_edit")
@@ -254,7 +251,6 @@ class ConfEditorWidget(Static):
     def _disable_form(self):
         # disable Save button
         self._toggle_button("btn_save")
-        self._toggle_button("btn_save_as")
 
         # enable Edit button
         self._toggle_button("btn_edit") 

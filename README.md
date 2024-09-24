@@ -2,17 +2,16 @@
 
 This tool aims to allow the user to interrogate a csv file using SQL language.
 
+**[NOTE]** At the moment we support Docker only containers.
+
 ## How to install
 
-Use a virtual env:
 
 ```shell
-$ cd anadi_tui
+$ cd AnadiCSV
 
-$ python3.11 -m venv venv
-$ source venv/bin/activate
+$ ./install.sh
 
-$ poetry install
 ```
 
 ## How to use
@@ -32,7 +31,14 @@ options:
 
 ### How to run
 
-After enabling the virtual environment use:
+By default anadi use te current folder to find CSV files
+
+```shell
+anadi
+```
+
+if your files are in a different location use *-d* options
+
 
 ```shell
 anadi -d DATA_DIR

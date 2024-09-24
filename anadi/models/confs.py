@@ -96,7 +96,6 @@ class SettingsDB(BaseModel):
 
     @classmethod
     def save_default(cls, conffile: str):
-        print("save default")
         with open(conffile, 'w') as cfile:
             json.dump(SettingsDB().dict(), cfile)
 

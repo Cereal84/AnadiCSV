@@ -2,7 +2,7 @@
 
 This tool aims to allow the user to interrogate a csv file using SQL language.
 
-**[NOTE]** At the moment we support Docker only containers.
+**[NOTE]** At the moment we support Docker only containers in Linux Debian/Ubuntu platform.
 
 
 ![screenshot](images/screenshots/screenshot1.png)

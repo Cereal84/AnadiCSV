@@ -1,4 +1,5 @@
 
+Run query to certain file by command cli 
 
 Improve SaveAs Modal:
     - passing placeholder for Input widget

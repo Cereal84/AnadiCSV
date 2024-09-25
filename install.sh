@@ -13,5 +13,5 @@ fi
 
 # copy anadi.sh in $HOME/bin as anadi
 cp anadi.sh "$HOME/.local/bin/anadi"
-
+alias anadi="$HOME/.local/bin/anadi"
 echo "Now you can use the command 'anadi'"

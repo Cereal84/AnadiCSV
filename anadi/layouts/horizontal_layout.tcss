@@ -31,7 +31,7 @@ CommandContainer {
 }
 
 .sql_editor {
-    height: 25%;
+    height: 21%;
 }
 
 .history_item {
@@ -43,6 +43,7 @@ CommandContainer {
     dock: right;
     border: none;
     height: 1;
+	margin-top: 1;
 }
 
 .btn_export {

@@ -43,7 +43,7 @@ CommandContainer {
     dock: right;
     border: none;
     height: 1;
-	margin-top: 1;
+    margin-top: 1;
 }
 
 .btn_export {

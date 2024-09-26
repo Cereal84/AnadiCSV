@@ -8,6 +8,7 @@ from anadi.models.confs import SettingsApp, SettingsDB
 
 parser = argparse.ArgumentParser(prog="AnadiCSV", description="Handle CVS file using SQL language")
 parser.add_argument("-d", "--dir", type=str, help="CSV file dir", required=True)
+parser.add_argument("-f", "--file", type=str, help="CSV file name", required=False)
 parser.add_argument("-q", "--query", type=str, help="SQL query to execute", required=False)
 
 
@@ -19,7 +20,7 @@ def run():
         app.init(args.dir, os.path.abspath(os.path.expanduser(ANADI_CONF_FILE)))
         if args.query:
             csvdb = CSVDB()
-            csvdb.load(args.dir,SettingsDB())
+            csvdb.load(args.file,SettingsDB())
             result = csvdb.raw_sql(args.query)
             print(result)
         else:

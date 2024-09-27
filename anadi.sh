@@ -56,4 +56,7 @@ if [ ! -d "$DATA_PATH" ]; then
     exit 1
 fi
 
-docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest
+# Try to run container image with docker command, if not possible run with podman command.
+# Note: if you have podman-docker installed it work well with the first command.
+docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest ||
+podman run -it --mount type=bind,source="$CONF_PATH",dst=/root/.config/anadi,relabel=shared --mount type=bind,source="$DATA_PATH",dst=/data/,relabel=shared anadi:latest

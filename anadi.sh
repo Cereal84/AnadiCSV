@@ -8,7 +8,9 @@ CONF_PATH="${HOME}/.config/anadi/"
 DATA_PATH=$(pwd)
 
 
-Help()
+ENGINE=""
+
+function help()
 {
    # Display Help
    echo "Anadi."
@@ -21,6 +23,20 @@ Help()
    echo
 }
 
+function get_container_engine() {
+
+    # Check if docker is running
+    if docker version >/dev/null 2>&1; then
+        ENGINE="docker"
+    elif podman version >/dev/null 2>&1; then
+        ENGINE="podman"
+    else
+        echo "Docker or Podman seems not to be installed or running !";
+        exit 1
+    fi
+}
+
+
 # if the env var exists use its value
 if [ ! -z "${ANADI_SETTINGS_DIR}" ]; then
     CONF_PATH="${ANADI_SETTINGS_DIR}"
@@ -31,12 +47,17 @@ fi
 while getopts "c:d:h" option; do
    case $option in
       h) # display Help
-         Help
+         help
          exit;;
       c) CONF_PATH=$OPTARG;;
       d) DATA_PATH=$OPTARG;;
    esac
 done
+
+
+get_container_engine
+
+# check if the image exists TODO
 
 
 if [ -z "$CONF_PATH" ]; then
@@ -56,4 +77,9 @@ if [ ! -d "$DATA_PATH" ]; then
     exit 1
 fi
 
-docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest
+if [ "$ENGINE" = "docker" ]; then
+    docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest
+else
+    podman run -it -v "$CONF_PATH":/root/.config/anadi:z -v "$DATA_PATH":/data/ anadi:latest
+
+fi

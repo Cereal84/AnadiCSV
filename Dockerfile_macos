@@ -1,0 +1,28 @@
+FROM python:3.12-slim as builder
+LABEL authors="apischedda"
+
+COPY requirements.txt .
+COPY files/duckdb-1.1.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl .
+
+# without wheel it try to build it from sources
+RUN pip install pip --no-cache-dir --upgrade && \
+    pip install duckdb-1.1.1-cp312-cp312-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip cache purge
+
+
+
+FROM python:3.12-slim as runner
+LABEL authors="apischedda"
+
+RUN mkdir anadi && mkdir -p /root/.config/anadi && mkdir /data/
+
+ENV PATH="${PATH}:/root/.local/bin"
+ENV PYTHONPATH=.
+
+ COPY --from=builder /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+
+
+COPY anadi ./anadi
+
+ENTRYPOINT ["python", "-m", "anadi.__main__", "-d" , "/data/"]

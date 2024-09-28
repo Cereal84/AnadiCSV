@@ -2,7 +2,15 @@
 
 This tool aims to allow the user to interrogate a csv file using SQL language.
 
-**[NOTE]** At the moment we support Docker only containers in Linux Debian/Ubuntu platform.
+## Supported Container Engine
+
+   - Docker
+   - Podman
+
+## Supported O.S.
+
+   - Linux
+   - OSX
 
 
 ![screenshot](images/screenshots/screenshot1.png)
@@ -14,7 +22,7 @@ This tool aims to allow the user to interrogate a csv file using SQL language.
 ```shell
 $ cd AnadiCSV
 
-$ ./install.sh
+$ sudo ./install.sh
 
 ```
 

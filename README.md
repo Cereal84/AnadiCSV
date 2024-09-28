@@ -18,7 +18,7 @@ This tool aims to allow the user to interrogate a csv file using SQL language.
 
 ## How to install
 
-run the script *install.sh* with superuser privileges.
+Run the script *install.sh* with superuser privileges.
 
 ```shell
 $ cd AnadiCSV

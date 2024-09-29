@@ -1,6 +1,6 @@
 name: Lint
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   lint:
@@ -11,4 +11,3 @@ jobs:
         with:
           options: "--check --verbose"
           src: "./anadi"
-          use_pyproject: true

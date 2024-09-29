@@ -1,9 +1,11 @@
 import json
-from pydantic import BaseModel, validator
 import os
 from typing import List, Optional
 
-from anadi.constants import ANADI_HISTORY_FILE, ANADI_DEFAULT_CONF_FILE, ANADI_RESULTS_DIR
+from pydantic import BaseModel, validator
+
+from anadi.constants import (ANADI_DEFAULT_CONF_FILE, ANADI_HISTORY_FILE,
+                             ANADI_RESULTS_DIR)
 
 
 class HistoryConf(BaseModel):

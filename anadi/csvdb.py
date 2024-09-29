@@ -1,6 +1,7 @@
-import duckdb
 import inspect
 from typing import List
+
+import duckdb
 
 from anadi.models.confs import SettingsDB
 from anadi.models.query_result import QueryResult

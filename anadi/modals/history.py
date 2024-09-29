@@ -1,11 +1,10 @@
-from textual import on
-from textual.app import ComposeResult
-from textual.screen import Screen
-from textual.widgets import Button, Label, ListView, ListItem, TextArea
-from textual.containers import Container, Horizontal, Vertical
-
 from typing import List
 
+from textual import on
+from textual.app import ComposeResult
+from textual.containers import Container, Horizontal, Vertical
+from textual.screen import Screen
+from textual.widgets import Button, Label, ListItem, ListView, TextArea
 
 
 class HistoryCmdModal(Screen[str]):

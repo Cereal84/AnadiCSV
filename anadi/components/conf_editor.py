@@ -6,12 +6,13 @@ from textual import on
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.message import Message
-from textual.widgets import Button, Input, Label, Rule, Select, Static, Switch, TextArea
 from textual.validation import Number, ValidationResult, Validator
+from textual.widgets import (Button, Input, Label, Rule, Select, Static,
+                             Switch, TextArea)
 
-from anadi.constants import ANADI_DEFAULT_CONF_FILE, ANADI_CUSTOM_CONFS
-from anadi.models.confs import SettingsDB
+from anadi.constants import ANADI_CUSTOM_CONFS, ANADI_DEFAULT_CONF_FILE
 from anadi.modals.save_as import SaveAsModal
+from anadi.models.confs import SettingsDB
 
 INPUT_TABLE_NAME_ID = "table_name_input"
 

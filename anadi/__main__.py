@@ -4,7 +4,6 @@ import argparse
 from anadi.app import AnadiApp
 from anadi.constants import *
 
-
 parser = argparse.ArgumentParser(prog="AnadiCSV", description="Handle CVS file using SQL language")
 parser.add_argument("-d", "--dir", type=str, help="CSV file dir", required=True)
 

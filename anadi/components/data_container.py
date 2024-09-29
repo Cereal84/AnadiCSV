@@ -3,8 +3,9 @@ import os
 
 from textual import on
 from textual.app import ComposeResult
-from textual.widgets import Button, DataTable, Label, Rule, Static, TabbedContent, TabPane
 from textual.containers import Horizontal, Vertical
+from textual.widgets import (Button, DataTable, Label, Rule, Static,
+                             TabbedContent, TabPane)
 
 from anadi.components.conf_editor import ConfEditorWidget
 from anadi.components.settings import SettingsWidget
@@ -12,7 +13,6 @@ from anadi.components.sql_editor import SQLEditor
 from anadi.constants import ANADI_RESULTS_DIR
 from anadi.modals.save_as import SaveAsModal
 from anadi.models.confs import SettingsApp, SettingsDB
-
 
 
 class DataContainer(Static):

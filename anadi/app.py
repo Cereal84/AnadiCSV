@@ -9,18 +9,17 @@ import re
 
 from textual import on
 from textual.app import App, ComposeResult
-from textual.widgets import Header, Footer, Rule
-from textual.widgets import Button, DataTable, TextArea, Label
 from textual.containers import Vertical
+from textual.widgets import (Button, DataTable, Footer, Header, Label, Rule,
+                             TextArea)
 
-
-from anadi.csvdb import CSVDB
-from anadi.constants import *
-from anadi.components.data_container import DataContainer
 from anadi.components.conf_editor import EventCSVConfAssociationChanged
 from anadi.components.csvtree import CSVTree
-from anadi.modals.quit import QuitAppModal
+from anadi.components.data_container import DataContainer
+from anadi.constants import *
+from anadi.csvdb import CSVDB
 from anadi.modals.history import HistoryCmdModal
+from anadi.modals.quit import QuitAppModal
 from anadi.models.confs import SettingsApp, SettingsDB
 
 

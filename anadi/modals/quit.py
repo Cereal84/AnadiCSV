@@ -1,9 +1,10 @@
 
 from textual import on
 from textual.app import ComposeResult
+from textual.containers import Container, Horizontal
 from textual.screen import ModalScreen
 from textual.widgets import Button, Label
-from textual.containers import Container, Horizontal
+
 
 class QuitAppModal(ModalScreen):
     """The modal used to asks to quit app."""

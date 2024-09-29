@@ -14,14 +14,24 @@ All the following tools are visible in `pyproject.toml` file.
 __Tool:__ black
 __Configuration:__ default settings.
 
-#### How to run
-
 ```console
 $ poetry run black anadi/
 
 All done! ✨ 🍰 ✨
 XX files left unchanged.
 ```
+
+### Format import order
+
+We use isort in order to fix import order and its format.
+
+__Tool:__ isort
+__Configuration:__ default settings.
+
+```console
+$ poetry run isort anadi/
+```
+
 
 ### Linting
 

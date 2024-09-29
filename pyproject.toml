@@ -28,5 +28,17 @@ ruff = "^0.6.8"
 mypy = "^1.11.2"
 pre-commit = "^3.8.0"
 
+[tool.poetry.tasks]
+ruff = "ruff check anadi"
+black = "black anadi"
+isort = "isort --settings-path .isort.cfg anadi"
+mypy = "mypy --config-file mypy.ini anadi"
+black-check = "black --check anadi"
+isort-check = "isort --settings-path .isort.cfg --check-only anadi"
+
+format = ["black", "isort"]
+lint = ["ruff", "mypy", "black-check", "isort-check"]
+pre-commit = "pre-commit"
+
 [tool.poetry.scripts]
 anadi = "anadi.__main__:run"

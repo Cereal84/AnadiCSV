@@ -35,42 +35,22 @@ $ poetry run isort anadi/
 
 ### Linting
 
+TODO
+
 __Tool:__ ruff
 __Configuration:__ details in `pyproject.toml` file.
 
-Check your code by calling:
-
-```console
-$ poetry run ruff check anadi/
-
-Poe => ruff check anadi
-All checks passed!
-```
-
-If your code doesn't pass and you feel you have a good reason for it not to be, you may use
-`noqa: ...` magic comments throughout the code, but please expect me to ask about it
-when you submit the PR.
 
 ### Typechecking
 
+TODO
 
 __Tool:__ mypy
 __Configuration:__ default settings.
 
-```console
-$ poetry run mypy anadi/
-
-Success: no issues found in XX source files
-```
-
 ### Pre-commit
 
-I use `pre-commit` to run all the above checks before committing. You can install it by calling:
-
-```console
-$ poetry pre-commit install
-pre-commit installed at .git/hooks/pre-commit
-```
+TODO
 
 ### Tests
 

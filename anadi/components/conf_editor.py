@@ -1,30 +1,27 @@
-
-
 import os
 
 from textual import on
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.message import Message
-from textual.widgets import Button, Input, Label, Rule, Select, Static, Switch, TextArea
 from textual.validation import Number, ValidationResult, Validator
+from textual.widgets import Button, Input, Label, Rule, Select, Static, Switch, TextArea
 
-from anadi.constants import ANADI_DEFAULT_CONF_FILE, ANADI_CUSTOM_CONFS
-from anadi.models.confs import SettingsDB
+from anadi.constants import ANADI_CUSTOM_CONFS, ANADI_DEFAULT_CONF_FILE
 from anadi.modals.save_as import SaveAsModal
+from anadi.models.confs import SettingsDB
 
 INPUT_TABLE_NAME_ID = "table_name_input"
 
 
-
 class EventCSVConfAssociationChanged(Message):
-    """ This message is used as Event in order to say to the APP
-        to update the csvdb istance and the sidebar infos
+    """This message is used as Event in order to say to the APP
+    to update the csvdb istance and the sidebar infos
     """
+
     def __init__(self, confname: str) -> None:
         self.confname = confname
         super().__init__()
-
 
 
 class ConfEditorWidget(Static):
@@ -68,84 +65,92 @@ class ConfEditorWidget(Static):
 
     """
 
-
     def compose(self) -> ComposeResult:
         yield Vertical(
             Horizontal(
                 Label("Configuration", classes="label_switch"),
                 Select(id="conf_list", options=[]),
                 Button("Apply", id="change_conf_file_btn"),
-                classes="switch_container"
+                classes="switch_container",
             ),
- 
             Vertical(
                 Horizontal(
                     Label("Table name", classes="label_switch"),
-                    Input(placeholder="tablename", type="text", id=INPUT_TABLE_NAME_ID, disabled=True)
+                    Input(
+                        placeholder="tablename",
+                        type="text",
+                        id=INPUT_TABLE_NAME_ID,
+                        disabled=True,
+                    ),
                 ),
-
                 Horizontal(
                     Label("CSV Delimitator", classes="label_switch"),
-                    Input(id="delim", type="text", disabled=True)
+                    Input(id="delim", type="text", disabled=True),
                 ),
-
-                Horizontal (
+                Horizontal(
                     Label("Skip rows", classes="label_switch"),
-                    Input(id="skip_input", disabled=True,
-                          validators=[
-                          Number(minimum=0, maximum=100)])
+                    Input(
+                        id="skip_input",
+                        disabled=True,
+                        validators=[Number(minimum=0, maximum=100)],
+                    ),
                 ),
-
                 Horizontal(
                     Label("Header", classes="label_switch"),
                     Switch(id="header", disabled=True),
-                    classes="switch_container"
+                    classes="switch_container",
                 ),
                 Horizontal(
                     Label("Normalize names", classes="label_switch"),
                     Switch(id="normalize_names", disabled=True),
-                    classes="switch_container"
+                    classes="switch_container",
                 ),
-
                 # TODO names
                 Rule(),
                 Horizontal(
-                    Button("Edit", id="btn_edit", variant="warning", classes="btn_edit"),
-                    Button("Save", id="btn_save", variant="success", disabled=True, classes="btn_save"),
+                    Button(
+                        "Edit", id="btn_edit", variant="warning", classes="btn_edit"
+                    ),
+                    Button(
+                        "Save",
+                        id="btn_save",
+                        variant="success",
+                        disabled=True,
+                        classes="btn_save",
+                    ),
                 ),
                 id="configuration_data",
-                classes="configuration_data"
-            )
+                classes="configuration_data",
+            ),
         )
 
     def on_mount(self):
 
         self.query_one("#configuration_data", Vertical).border_title = "Configuration"
-   
+
     def _render(self):
 
-        flist = [ (v, v) for v in os.listdir(self._dir)]
+        flist = [(v, v) for v in os.listdir(self._dir)]
         # update option list
         conflist = self.query_one("#conf_list", Select)
         conflist.clear()
         conflist.set_options(options=flist)
-        # highlight option list 
+        # highlight option list
         conflist.value = self._filename
-        
 
         # load conf
         data = SettingsDB.load_file(os.path.join(self._dir, self._filename))
 
         # table_name
         tablename = self.query_one(f"#{INPUT_TABLE_NAME_ID}", Input)
-        tablename.value = data.table_name 
+        tablename.value = data.table_name
 
         # delimitator
         delim = self.query_one("#delim", Input)
         delim.value = data.conf.delim
 
         # header
-        header = self.query_one("#header", Switch) 
+        header = self.query_one("#header", Switch)
         header.value = data.conf.header
 
         # skip rows
@@ -153,15 +158,14 @@ class ConfEditorWidget(Static):
         delim.value = str(data.conf.skip)
 
         # normalize names
-        normalize = self.query_one("#normalize_names", Switch) 
+        normalize = self.query_one("#normalize_names", Switch)
         normalize.value = data.conf.normalize_names
-
 
     @on(Select.Changed)
     def select_changed(self, event: Select.Changed) -> None:
         if str(event.value) == "Select.BLANK":
             return
-       
+
         if event.value != self._filename:
             self._filename = event.value
             self._render()
@@ -184,10 +188,9 @@ class ConfEditorWidget(Static):
 
     def load_filename(self, filename: str, dir: str):
         self._filename = filename
-        self._origianl_fname = filename       
+        self._origianl_fname = filename
         self._dir = dir
         self._render()
-
 
     def _get_conf_data(self):
         new_data = SettingsDB()
@@ -204,7 +207,7 @@ class ConfEditorWidget(Static):
         # reload confs
         self._render()
 
-    def _get_new_filename(self,  new_fname):
+    def _get_new_filename(self, new_fname):
         if new_fname == "":
             return
 
@@ -215,10 +218,12 @@ class ConfEditorWidget(Static):
 
         if self._filename == os.path.split(ANADI_DEFAULT_CONF_FILE)[1]:
             # ask for a new name
-            self.app.push_screen(SaveAsModal(ANADI_CUSTOM_CONFS), self._get_new_filename)
+            self.app.push_screen(
+                SaveAsModal(ANADI_CUSTOM_CONFS), self._get_new_filename
+            )
         else:
             self._get_conf_data()
-        
+
     @on(Button.Pressed, "#change_conf_file_btn")
     def on_click_apply_btn(self):
         # update original filename
@@ -228,8 +233,6 @@ class ConfEditorWidget(Static):
         self.post_message(EventCSVConfAssociationChanged(self._filename))
 
         self._render()
-
-        
 
     @on(Button.Pressed, "#btn_edit")
     def on_edit_btn_click(self):
@@ -247,13 +250,12 @@ class ConfEditorWidget(Static):
         self._enable_switch("normalize_names")
         self._enable_switch("header")
 
-
     def _disable_form(self):
         # disable Save button
         self._toggle_button("btn_save")
 
         # enable Edit button
-        self._toggle_button("btn_edit") 
+        self._toggle_button("btn_edit")
 
         # enable input and switch elements
         self._disable_input(INPUT_TABLE_NAME_ID)
@@ -263,15 +265,13 @@ class ConfEditorWidget(Static):
         self._disable_switch("normalize_names")
         self._disable_switch("header")
 
-
     @on(Button.Pressed, "#btn_save")
     def on_save_btn_click(self):
 
         try:
             self._save_content()
         except Exception as ex:
-            with open("error.log", 'w') as errfile:
+            with open("error.log", "w") as errfile:
                 errfile.write(f"{ex}")
- 
-            self.notify(f"{ex}", severity="error")
 
+            self.notify(f"{ex}", severity="error")

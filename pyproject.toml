@@ -17,7 +17,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-python = ">=3.8.1,<4.0.0"
+python = ">=3.9.0,<4.0.0"
 
 # textual and component libraries
 textual = "==0.75.0"
@@ -26,6 +26,7 @@ black = "^24.8.0"
 isort = "^5.13.2"
 ruff = "^0.6.8"
 mypy = "^1.11.2"
+pre-commit = "^3.8.0"
 
 [tool.poetry.scripts]
 anadi = "anadi.__main__:run"

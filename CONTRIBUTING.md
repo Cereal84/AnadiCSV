@@ -68,7 +68,7 @@ Success: no issues found in XX source files
 I use `pre-commit` to run all the above checks before committing. You can install it by calling:
 
 ```console
-$ poe pre-commit install
+$ poetry pre-commit install
 pre-commit installed at .git/hooks/pre-commit
 ```
 

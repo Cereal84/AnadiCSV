@@ -41,7 +41,7 @@ __Configuration:__ details in `pyproject.toml` file.
 Check your code by calling:
 
 ```console
-$ poetry run ruff anadi/
+$ poetry run ruff check anadi/
 
 Poe => ruff check anadi
 All checks passed!

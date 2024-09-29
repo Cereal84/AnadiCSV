@@ -17,5 +17,3 @@ class QueryResult:
             table.add_row(row)
 
         return table.get_string()
-
-

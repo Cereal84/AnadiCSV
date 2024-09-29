@@ -10,7 +10,6 @@ from textual.widgets import Button, Input, Label
 class SaveAsModal(ModalScreen[str]):
     """The modal used to asks a filename to save."""
 
-
     DEFAULT_CSS = """
         SaveAsModal {
             align: center middle;
@@ -48,8 +47,8 @@ class SaveAsModal(ModalScreen[str]):
             Input(placeholder="filename", type="text", id="new_filename"),
             Horizontal(
                 Button("Cancel", id="btn_cancel", variant="error"),
-                Button("Save", id="btn_save_new", variant="success")
-            )
+                Button("Save", id="btn_save_new", variant="success"),
+            ),
         )
 
     @on(Button.Pressed, "#btn_save_new")

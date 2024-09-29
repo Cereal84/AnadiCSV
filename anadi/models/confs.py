@@ -4,8 +4,11 @@ from typing import List, Optional
 
 from pydantic import BaseModel, validator
 
-from anadi.constants import (ANADI_DEFAULT_CONF_FILE, ANADI_HISTORY_FILE,
-                             ANADI_RESULTS_DIR)
+from anadi.constants import (
+    ANADI_DEFAULT_CONF_FILE,
+    ANADI_HISTORY_FILE,
+    ANADI_RESULTS_DIR,
+)
 
 
 class HistoryConf(BaseModel):
@@ -23,46 +26,45 @@ class SettingsApp(BaseModel):
     @classmethod
     def check_file(cls, v: str):
         if not os.path.exists(v):
-           raise RuntimeError(f"File '{v}' does not exists")
+            raise RuntimeError(f"File '{v}' does not exists")
 
         if not os.path.isfile(v):
-           raise RuntimeError(f"'{v}' is not a file")
- 
-    @validator('default_conf')
+            raise RuntimeError(f"'{v}' is not a file")
+
+    @validator("default_conf")
     def validate_default(cls, v):
         if v == "":
-           return
-        
+            return
+
         SettingsApp.check_file(v)
         return v
 
-    @validator('custom_confs')
+    @validator("custom_confs")
     def validate_rules(cls, v):
         for _, conf in v.items():
             SettingsApp.check_file(conf)
         return v
 
     @classmethod
-    def load_file(cls, filename: str): 
+    def load_file(cls, filename: str):
         conf = None
-        with open(filename, 'r') as conffile:
+        with open(filename, "r") as conffile:
             data = json.load(conffile)
             conf = SettingsApp(**data)
 
         return conf
 
     @classmethod
-    def load_str(cls, data: str): 
+    def load_str(cls, data: str):
         return SettingsApp(**json.loads(data))
 
     @classmethod
     def save_default(cls, conffile: str):
-        with open(conffile, 'w') as cfile:
+        with open(conffile, "w") as cfile:
             json.dump(SettingsApp().dict(), cfile)
 
-
     def save_file(self, conffile: str):
-        with open(conffile, 'w') as cfile:
+        with open(conffile, "w") as cfile:
             json.dump(self.dict(), cfile)
 
 
@@ -86,22 +88,21 @@ class SettingsDB(BaseModel):
             return SettingsDB()
 
         conf = None
-        with open(filename, 'r') as conffile:
+        with open(filename, "r") as conffile:
             data = json.load(conffile)
             conf = SettingsDB(**data)
 
         return conf
 
     @classmethod
-    def load_str(cls, data: str): 
+    def load_str(cls, data: str):
         return SettingsDB(**json.loads(data))
 
     @classmethod
     def save_default(cls, conffile: str):
-        with open(conffile, 'w') as cfile:
+        with open(conffile, "w") as cfile:
             json.dump(SettingsDB().dict(), cfile)
 
-
     def save_file(self, conffile: str):
-        with open(f"{conffile}", 'w') as cfile:
+        with open(f"{conffile}", "w") as cfile:
             json.dump(self.dict(), cfile)

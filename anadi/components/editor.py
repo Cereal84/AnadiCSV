@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -35,37 +34,48 @@ class EditorWidget(Static):
     def compose(self) -> ComposeResult:
         yield Vertical(
             Label("File:", id="label_filename"),
-            TextArea.code_editor("", id="content_data", language="json", read_only=True,
-                                   show_line_numbers=False, theme="monokai"),
-
+            TextArea.code_editor(
+                "",
+                id="content_data",
+                language="json",
+                read_only=True,
+                show_line_numbers=False,
+                theme="monokai",
+            ),
             Horizontal(
                 Button("Edit", id="btn_edit", variant="warning", classes="btn_edit"),
-                Button("Save", id="btn_save", variant="success", disabled=True, classes="btn_save"),
-            )
+                Button(
+                    "Save",
+                    id="btn_save",
+                    variant="success",
+                    disabled=True,
+                    classes="btn_save",
+                ),
+            ),
         )
-   
+
     def _render(self):
         # show setting file name
         filename_label = self.query_one("#label_filename", Label)
         filename_label.update(f"File: {self._filename}")
 
-        settings_text = self.query_one("#content_data", TextArea) 
+        settings_text = self.query_one("#content_data", TextArea)
         settings_text.text = Path(self._filename).read_text()
 
     def _toggle_button(self, btn_id: str):
         btn = self.query_one(f"#{btn_id}", Button)
         btn.disabled = not btn.disabled
 
-    def load_filename(self, filename: str, validation_data = None):
+    def load_filename(self, filename: str, validation_data=None):
         self._validation_data = validation_data
         self._filename = filename
         self._render()
 
     def _save_content(self) -> bool:
-        content = self.query_one('#content_data', TextArea).text
+        content = self.query_one("#content_data", TextArea).text
         if self._validation_data is not None:
             self._validation_data(content)
-        with open(self._filename, 'w') as outputfile:
+        with open(self._filename, "w") as outputfile:
             outputfile.write(content)
 
     @on(Button.Pressed, "#btn_edit")
@@ -77,7 +87,7 @@ class EditorWidget(Static):
 
         # enable Save button
         self._toggle_button("btn_save")
-    
+
         # disable Edit button
         self._toggle_button("btn_edit")
 
@@ -95,13 +105,13 @@ class EditorWidget(Static):
 
             # enable Save button
             self._toggle_button("btn_save")
-    
+
             # disable Edit button
-            self._toggle_button("btn_edit") 
+            self._toggle_button("btn_edit")
 
         except ValidationError as ex:
-            field_path = ".".join(ex.errors()[0]['loc'])
-            err_msg =  ex.errors()[0]['msg']
+            field_path = ".".join(ex.errors()[0]["loc"])
+            err_msg = ex.errors()[0]["msg"]
             msg_error = f"'{field_path}': {err_msg}"
             self.notify(msg_error, severity="error")
         except Exception as ex:
@@ -109,8 +119,3 @@ class EditorWidget(Static):
         else:
             self.notify("Saved")
             return True
-
-
- 
-
-

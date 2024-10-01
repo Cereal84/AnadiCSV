@@ -16,18 +16,18 @@ case "$OSTYPE" in
    darwin*)  
     OS="OSX" 
     ;; 
-  linux*)   
-    OS="Linux"
-    install_linux
+   linux*)   
+    OS="Linux" 
+    install_linux   # Calling Linux installation function
     exit 1
     ;; 
   msys*|cygwin*|mingw*)  
     OS="Windows"
-    install_windows
+    install_windows  # Calling Windows installation function
     exit 1
-    ;;
-  *)        
-    echo "Unknown OS: $OSTYPE"
+    ;; 
+  *)         
+    echo "Error: Unknown OS: $OSTYPE"
     exit 1
     ;;
 esac
@@ -57,6 +57,9 @@ install_windows() {
     cp "anadi.sh" "$target_dir/anadi"
     echo "Installed anadi.sh to $target_dir/anadi"
 }
+
+# Copy anadi.sh in /usr/local/bin as anadi (for macOS or other Unix-like OSes)
+cp anadi.sh /usr/local/bin/anadi
 
 # Build Docker image after installation (if not handled above)
 ./build_image.sh || {

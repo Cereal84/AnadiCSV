@@ -12,4 +12,4 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY anadi ./anadi
 
-ENTRYPOINT ["python", "-m", "anadi.__main__", "-d" , "/data/"]
+ENTRYPOINT ["python", "-m", "anadi.__main__"]

@@ -1,0 +1,13 @@
+name: Run isort
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: python-isort
+        uses: isort/isort-action@v1
+        with:
+          requirements-files: "requirements.txt"
+      

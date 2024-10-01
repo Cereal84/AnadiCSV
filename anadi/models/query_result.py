@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from prettytable import PrettyTable
 from typing import List
+
+from prettytable import PrettyTable
 
 
 @dataclass
@@ -16,5 +17,3 @@ class QueryResult:
             table.add_row(row)
 
         return table.get_string()
-
-

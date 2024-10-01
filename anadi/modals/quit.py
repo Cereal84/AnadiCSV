@@ -1,13 +1,12 @@
-
 from textual import on
 from textual.app import ComposeResult
+from textual.containers import Container, Horizontal
 from textual.screen import ModalScreen
 from textual.widgets import Button, Label
-from textual.containers import Container, Horizontal
+
 
 class QuitAppModal(ModalScreen):
     """The modal used to asks to quit app."""
-
 
     DEFAULT_CSS = """
         QuitAppModal {
@@ -36,14 +35,12 @@ class QuitAppModal(ModalScreen):
 
     """
 
-
     def compose(self) -> ComposeResult:
         with Container():
             yield Label("Are you sure you want to quit?")
             with Horizontal():
                 yield Button("no", id="no_quit", variant="error")
                 yield Button("yes", id="yes_quit", variant="success")
-
 
     @on(Button.Pressed, "#yes_quit")
     def exit_app(self) -> None:

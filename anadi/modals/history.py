@@ -1,16 +1,14 @@
-from textual import on
-from textual.app import ComposeResult
-from textual.screen import Screen
-from textual.widgets import Button, Label, ListView, ListItem, TextArea
-from textual.containers import Container, Horizontal, Vertical
-
 from typing import List
 
+from textual import on
+from textual.app import ComposeResult
+from textual.containers import Container, Horizontal, Vertical
+from textual.screen import Screen
+from textual.widgets import Button, Label, ListItem, ListView, TextArea
 
 
 class HistoryCmdModal(Screen[str]):
     """The modal used to asks to quit app."""
-
 
     DEFAULT_CSS = """
         HistoryCmdModal {
@@ -73,24 +71,36 @@ class HistoryCmdModal(Screen[str]):
         self._selected_item = ""
         super().__init__()
 
-
     def compose(self) -> ComposeResult:
         items = []
         for elem in self._history:
-            items.append(ListItem(TextArea(elem, language="sql", classes="history_item",
-                                           read_only=True)))
+            items.append(
+                ListItem(
+                    TextArea(
+                        elem, language="sql", classes="history_item", read_only=True
+                    )
+                )
+            )
 
         with Vertical():
             yield ListView(*items, id="history_view")
             with Horizontal():
-                yield Button("Cancel", id="ignore_history", classes="ignore_history", variant="error")
-                yield Button("Select", id="select_history", classes="select_history", variant="success")
+                yield Button(
+                    "Cancel",
+                    id="ignore_history",
+                    classes="ignore_history",
+                    variant="error",
+                )
+                yield Button(
+                    "Select",
+                    id="select_history",
+                    classes="select_history",
+                    variant="success",
+                )
 
     def on_mount(self) -> None:
-        history = self.query_one("#history_view", ListView)        
+        history = self.query_one("#history_view", ListView)
         history.border_title = "HISTORY"
-
-
 
     @on(Button.Pressed, "#select_history")
     def select_item(self) -> None:

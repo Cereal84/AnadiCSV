@@ -13,20 +13,20 @@ check_requirements
 
 # OS detection and calling the appropriate install function
 case "$OSTYPE" in
-   darwin*)  
+  darwin*)  
     OS="OSX" 
     ;; 
-   linux*)   
+  linux*)   
     OS="Linux" 
-    install_linux   # Calling Linux installation function
+    install_linux  # Calling the install function for Linux systems
     exit 1
     ;; 
   msys*|cygwin*|mingw*)  
     OS="Windows"
-    install_windows  # Calling Windows installation function
+    install_windows  # Calling the install function for Windows systems
     exit 1
     ;; 
-  *)         
+  *)        
     echo "Error: Unknown OS: $OSTYPE"
     exit 1
     ;;
@@ -43,7 +43,10 @@ if [ ! -d "$CONF_PATH" ]; then
     mkdir -p "$CONF_PATH"
 fi
 
-# Function to install on Debian/Ubuntu
+# Copy anadi.sh in /usr/local/bin as anadi (for macOS or other Unix-like systems)
+cp anadi.sh /usr/local/bin/anadi
+
+# Function to install on Debian/Ubuntu (Linux)
 install_linux() {
     mkdir -p "$HOME/.local/bin"
     cp "anadi.sh" "$HOME/.local/bin/anadi"
@@ -57,9 +60,6 @@ install_windows() {
     cp "anadi.sh" "$target_dir/anadi"
     echo "Installed anadi.sh to $target_dir/anadi"
 }
-
-# Copy anadi.sh in /usr/local/bin as anadi (for macOS or other Unix-like OSes)
-cp anadi.sh /usr/local/bin/anadi
 
 # Build Docker image after installation (if not handled above)
 ./build_image.sh || {

@@ -28,7 +28,7 @@ ruff = "^0.6.8"
 mypy = "^1.11.2"
 pre-commit = "^3.8.0"
 
-[tool.poetry.tasks]
+[tool.poe.tasks]
 ruff = "ruff check anadi"
 black = "black anadi"
 isort = "isort --settings-path .isort.cfg anadi"

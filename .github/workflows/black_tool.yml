@@ -1,9 +1,11 @@
-name: Lint
+name: code_format
 
-on: [push]
+on:
+  pull_request:
+    types: [opened, synchronize]
 
 jobs:
-  lint:
+  code_format:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

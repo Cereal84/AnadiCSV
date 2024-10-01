@@ -23,7 +23,7 @@ Run the script *install.sh* with superuser privileges.
 ```shell
 $ cd AnadiCSV
 
-$ sudo ./install.sh
+$ ./install.sh
 
 ```
 

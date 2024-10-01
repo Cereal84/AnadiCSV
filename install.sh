@@ -28,7 +28,13 @@ if [ ! -d "$CONF_PATH" ]; then
     mkdir -p $CONF_PATH
 fi
 
-# copy anadi.sh in $HOME/bin as anadi
-cp anadi.sh /usr/local/bin/anadi
+# It would be nice to be able to chose where to install the script
+# Default can still be $HOME/local/bin to avoid using sudo
+DEST_PATH=$HOME/.local/bin
 
-echo "Now you can use the command 'anadi'"
+# copy anadi.sh to $DEST_PATH
+cp anadi.sh $DEST_PATH/anandi
+
+echo "Now you can use the command '$DEST_PATH/anandi'"
+
+echo "Please consider adding '$DEST_PATH' to your PATH environment variable"

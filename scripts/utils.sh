@@ -7,20 +7,8 @@ NC='\033[0m'
 
 ENGINE=""
 
-am_i_root() {
-
-  if [ $(id -u) -ne 0 ]; then
-      echo -e "${Red}ERROR:${NC} Please run as root" >&2;
-      exit 1
-  fi
-}
-
 
 function check_requirements() {
-
-    # we need super-user privileges in order to
-    # copy the anadi.sh file into /usr/local/bin directory
-    am_i_root
 
     # We neeed to have one between Docker or Podman installed.
     # We store which engine is installed in ENGINE variable

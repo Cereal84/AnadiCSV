@@ -13,6 +13,9 @@ check_requirements
 
 # OS detection and calling the appropriate install function
 case "$OSTYPE" in
+   darwin*)  
+    OS="OSX" 
+    ;; 
   linux*)   
     OS="Linux"
     install_linux
@@ -29,6 +32,17 @@ case "$OSTYPE" in
     ;;
 esac
 
+# Notify about the detected OS
+echo -e "OS: ${Green}${OS}${NC}"
+
+# Build image (this assumes the build_image function is defined in utils.sh)
+build_image $OS $ENGINE
+
+# Create the config directory if needed
+if [ ! -d "$CONF_PATH" ]; then
+    mkdir -p "$CONF_PATH"
+fi
+
 # Function to install on Debian/Ubuntu
 install_linux() {
     mkdir -p "$HOME/.local/bin"
@@ -44,5 +58,8 @@ install_windows() {
     echo "Installed anadi.sh to $target_dir/anadi"
 }
 
-# Build Docker image after installation
-./build_image.sh
+# Build Docker image after installation (if not handled above)
+./build_image.sh || {
+    echo "Error: Failed to build Docker image"
+    exit 1
+}

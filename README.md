@@ -72,3 +72,7 @@ Usage: Specify the lines that you want to skip. For example, if you set Skip to 
 
 Description: The Normalize Names option normalizes the column naming format. This helps ensure consistency and prevents problems caused by naming variations (e.g. spaces, case sensitivity).
 Usage: When activated This option converts all column names to a specific format (such as lowercase letters, underscores instead of spaces) to facilitate data management and analysis...
+
+## How Contribute
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) file.

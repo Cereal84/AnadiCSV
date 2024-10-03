@@ -5,6 +5,7 @@ from textual.widgets import Label, Static
 from anadi.constants import ANADI_CONF_FILE, ANADI_CUSTOM_CONFS
 from anadi.models.confs import SettingsApp
 
+
 class SettingsWidget(Static):
 
     DEFAULT_CSS = """

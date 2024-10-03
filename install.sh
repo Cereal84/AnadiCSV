@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # --- Includes
 . scripts/utils.sh
 
@@ -10,7 +9,27 @@ BIN_DESTINATION_PATH="$HOME"
 OS=""
 
 # Makes some checks and sets ENGINE variable
-check_requirements
+check_requirements() {
+    if [[ "$OS" == "Windows" ]]; then
+        if where docker &>/dev/null; then
+            ENGINE="docker"
+        elif where podman &>/dev/null; then
+            ENGINE="podman"
+        else
+            echo "Error: Neither Docker nor Podman is installed."
+            exit 1
+        fi
+    else
+        if command -v docker &>/dev/null; then
+            ENGINE="docker"
+        elif command -v podman &>/dev/null; then
+            ENGINE="podman"
+        else
+            echo "Error: Neither Docker nor Podman is installed."
+            exit 1
+        fi
+    fi
+}
 
 # OS detection and calling the appropriate install function
 case "$OSTYPE" in
@@ -19,13 +38,9 @@ case "$OSTYPE" in
     ;; 
   linux*)   
     OS="Linux" 
-    install_linux  # Calling the install function for Linux systems
-    exit 1
     ;; 
   msys*|cygwin*|mingw*)  
     OS="Windows"
-    install_windows  # Calling the install function for Windows systems
-    exit 1
     ;; 
   *)        
     echo "Error: Unknown OS: $OSTYPE"
@@ -35,17 +50,6 @@ esac
 
 # Notify about the detected OS
 echo -e "OS: ${Green}${OS}${NC}"
-
-# Build image (this assumes the build_image function is defined in utils.sh)
-build_image $OS $ENGINE
-
-# Create the config directory if needed
-if [ ! -d "$CONF_PATH" ]; then
-    mkdir -p "$CONF_PATH"
-fi
-
-# Copy anadi.sh in /usr/local/bin as anadi (for macOS or other Unix-like systems)
-cp anadi.sh /usr/local/bin/anadi
 
 # Function to install on Debian/Ubuntu (Linux)
 install_linux() {
@@ -62,8 +66,27 @@ install_windows() {
     echo "Installed anadi.sh to $target_dir/anadi"
 }
 
-# Build Docker image after installation (if not handled above)
-./build_image.sh || {
-    echo "Error: Failed to build Docker image"
-    exit 1
+# Function to install on macOS
+install_osx() {
+    sudo mkdir -p /usr/local/bin
+    sudo cp anadi.sh /usr/local/bin/anadi
+    echo "Installed anadi.sh to /usr/local/bin/anadi"
 }
+
+# Install based on detected OS
+case "$OS" in
+  "Linux")
+    install_linux
+    ;;
+  "Windows")
+    install_windows
+    ;;
+  "OSX")
+    install_osx
+    ;;
+esac
+
+# Create the config directory if needed
+if [ ! -d "$CONF_PATH" ]; then
+    mkdir -p "$CONF_PATH"
+fi

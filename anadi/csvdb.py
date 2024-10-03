@@ -1,6 +1,7 @@
-import duckdb
 import inspect
 from typing import List
+
+import duckdb
 
 from anadi.models.confs import SettingsDB
 from anadi.models.query_result import QueryResult
@@ -11,7 +12,7 @@ class CSVDB:
     def __init__(self):
         self._filename = ""
         self._conf = None
-        self._db_conn = None 
+        self._db_conn = None
         self._table_name = ""
 
     def table_name(self) -> str:
@@ -25,7 +26,7 @@ class CSVDB:
 
     def _import_csv(self):
         # CREATE DB
-        self._db_conn = duckdb.connect(database=':memory:')
+        self._db_conn = duckdb.connect(database=":memory:")
         # create table and import CSV
         # TODO add columns_type for the schema
         from_section = f"""FROM read_csv('{self._filename}',
@@ -41,12 +42,12 @@ class CSVDB:
         return self._gen_query_result(res)
 
     def exec_get_columns_name(self) -> List:
-        res = self._db_conn.sql(f"DESCRIBE TABLE '{self._table_name}'") 
+        res = self._db_conn.sql(f"DESCRIBE TABLE '{self._table_name}'")
         col_name = []
         for row in res.fetchall():
-             col_name.append(row[0])
+            col_name.append(row[0])
 
-        return col_name 
+        return col_name
 
     def exec_raw_sql(self, sql: str):
         """split the query and put the FROM section"""
@@ -69,11 +70,16 @@ class CSVDB:
         return QueryResult(header=header, rows=data)
 
     def get_antenna_gain_list(self) -> QueryResult:
-        res = self._db_conn.sql(f"SELECT DISTINCT(ant_gain_db) FROM '{self._table_name}'")
+        res = self._db_conn.sql(
+            f"SELECT DISTINCT(ant_gain_db) FROM '{self._table_name}'"
+        )
         return self._gen_query_result(res)
 
     def get_method_list(self):
-        methods_list = [ method[0].replace('exec_', '') for method in inspect.getmembers(self, predicate=inspect.ismethod) if method[0].startswith('exec_') ]
+        methods_list = [
+            method[0].replace("exec_", "")
+            for method in inspect.getmembers(self, predicate=inspect.ismethod)
+            if method[0].startswith("exec_")
+        ]
 
         return methods_list
-

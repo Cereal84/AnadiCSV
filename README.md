@@ -61,7 +61,7 @@ anadi -d DATA_DIR
 
 ### Conf Tab
 
-In this tab you can set how to interprete the csv file.
+In this tab you can set how to interprete the CSV file.
 
 #### Tablename
 
@@ -82,6 +82,19 @@ Specify the lines that you want to skip. For example, if you set Skip to 2, the 
 
 Default: *0*.
 
+##### Example
+
+Imagine you have the following CSV file
+
+```csv
+1,2,3,4
+01-01-2024,16,0,1000
+02-01-2024,15,0,1010
+03-01-2024,16,0.1,1020
+```
+Setting _Skip_ as 1 Anadi to ignore the first line.
+
+
 #### Header
 
 Specify if the CSV file has a header (the row in which you can see each column name).
@@ -89,12 +102,64 @@ When you enable this option. The first row of your data is considered the header
 
 Default: *enabled*.
 
+##### Example
+
+Suppose to have the following CSV file
+
+```csv
+Date,Temperature,Wind Speed,Air Pressure
+01-01-2024,16,0,1000
+02-01-2024,15,0,1010
+03-01-2024,16,0.1,1020
+```
+
+Enabling the _Header_ option Anadi knows that the first line is the header and so construct the columns name using those
+information.
+So the columns name are:
+ - Date
+ - Temperature
+ - Wind Speed
+ - Ait Pressure.
+
+Instead if you have the following one
+
+
+```csv
+1,2,3,4
+Date,Temperature,Wind Speed,Air Pressure
+01-01-2024,16,0,1000
+02-01-2024,15,0,1010
+03-01-2024,16,0.1,1020
+```
+
+You need to use both _Skip_ equal to 1 and enabling _Header_ option.
+
 #### Normalize name
 
 The Normalize Names option normalizes the column naming format. This helps ensure consistency and prevents problems caused by naming variations (e.g. spaces, case sensitivity).
 When activated This option converts all column names to a specific format (such as lowercase letters, underscores instead of spaces) to facilitate data management and analysis.
 
 Default: *enabled*
+
+##### Example
+
+Suppose to have the following CSV file
+
+```csv
+1,2,3,4
+Date,Temperature,Wind Speed,Air Pressure
+01-01-2024,16,0,1000
+02-01-2024,15,0,1010
+03-01-2024,16,0.1,1020
+```
+
+If you use the last conf and enable the _normalize name_ option the column name will be in lower case and the spaces are replaced with underscores, they will be:
+
+ - date
+ - temperature
+ - wind_speed
+ - air_pressure.
+ 
 
 ## How Contribute
 

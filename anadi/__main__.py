@@ -19,16 +19,15 @@ parser.add_argument("-t", "--tableschema", action='store_true', help="Show the s
 def run():
     args = parser.parse_args()
 
-    if (
-        not args.dir
-        and not args.file
-    ):
-        raise ValueError(
-            "Error: Either --dir or --file must be provided."
-        )
-    if args.dir and args.file:
-        raise ValueError("Error: Cannot user both --dir  and --file together")
     try:
+        if not args.dir and not args.file:
+            raise ValueError(
+                "Error: Either --dir or --file must be provided."
+            )
+        if args.dir and args.file:
+            raise ValueError("Error: Cannot user both --dir  and --file together")
+
+
         app = AnadiApp()
         if args.dir:
             app.init(args.dir, os.path.abspath(os.path.expanduser(ANADI_CONF_FILE)))
@@ -54,7 +53,4 @@ def run():
 
 
 if __name__ == "__main__":
-    try:
-        run()
-    except Exception as ex:
-        print(ex)
+    run()

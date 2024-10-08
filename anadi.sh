@@ -60,8 +60,8 @@ while getopts "c:d:f:q:h" option; do
          help
          exit;;
       c) CONF_PATH="$OPTARG";;
-      d) DATA_PATH="$OPTARG";;
-      f) FILENAME="$OPTARG";;
+      d) DATA_PATH="$(realpath $OPTARG)";;
+      f) FILENAME="$(realpath $OPTARG)";;
       q) QUERY_OPT="--query $OPTARG";;
       t) SCHEMA_OPT="-t"
    esac

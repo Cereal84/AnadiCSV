@@ -113,7 +113,6 @@ fi
 
 
 if [ "$ENGINE" = "docker" ]; then
-    echo  "$DATA_PATH_OPT $FILE_OPT $QUERY_OPT"
     docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
 else
     podman run -it -v "$CONF_PATH":/root/.config/anadi:z -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"

@@ -11,5 +11,6 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY anadi ./anadi
+COPY docker/entrypoint.sh entrypoint.sh
 
-ENTRYPOINT ["python", "-m", "anadi.__main__"]
+ENTRYPOINT ["sh", "entrypoint.sh"]

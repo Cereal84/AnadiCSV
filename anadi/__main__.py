@@ -13,7 +13,12 @@ parser.add_argument("-f", "--file", type=str, help="CSV file name", required=Fal
 parser.add_argument(
     "-q", "--query", type=str, help="SQL query to execute", required=False
 )
-parser.add_argument("-t", "--tableschema", action='store_true', help="Show the schema of the file passed via --file")
+parser.add_argument(
+    "-t",
+    "--tableschema",
+    action="store_true",
+    help="Show the schema of the file passed via --file",
+)
 
 
 def run():
@@ -23,9 +28,7 @@ def run():
         args, _ = parser.parse_known_args()
 
         if not args.dir and not args.file:
-            raise ValueError(
-                "Error: Either --dir or --file must be provided."
-            )
+            raise ValueError("Error: Either --dir or --file must be provided.")
         if args.dir and args.file:
             raise ValueError("Error: Cannot user both --dir  and --file together")
 
@@ -40,8 +43,8 @@ def run():
             if args.query:
                 result = csvdb.raw_sql(args.query)
                 print(result)
-            if  args.tableschema:
-                tablename = csvdb.table_name() 
+            if args.tableschema:
+                tablename = csvdb.table_name()
 
                 schema = csvdb.get_schema()
                 print(f"Tablename: {tablename}")

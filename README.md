@@ -57,6 +57,22 @@ if your files are in a different location use *-d* options
 anadi -d DATA_DIR
 ```
 
+#### Run query via terminal
+
+It is possible to run a query for a specific CSV file directly via terminal/shell 
+without the TUI (Textual User Interface).
+
+```shell
+anadi -f ./data/measuremens.csv -q "SELECT temperature FROM tablename"
+```
+
+#### See CSV File Table schema via terminal
+
+```shell
+anadi -f ./data/measuremens.csv -t
+```
+
+
 ## UI
 
 ### Conf Tab

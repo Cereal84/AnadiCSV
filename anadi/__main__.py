@@ -13,32 +13,42 @@ parser.add_argument("-f", "--file", type=str, help="CSV file name", required=Fal
 parser.add_argument(
     "-q", "--query", type=str, help="SQL query to execute", required=False
 )
+parser.add_argument(
+    "-t",
+    "--tableschema",
+    action="store_true",
+    help="Show the schema of the file passed via --file",
+)
 
 
 def run():
-    args = parser.parse_args()
 
-    if (
-        not args.dir
-        and not (args.file and args.query)
-        or args.dir
-        and (args.file and args.query)
-    ):
-        raise ValueError(
-            "Error: Either --dir must be provided, or both --file and --query must be provided."
-        )
-    if args.dir and args.file:
-        raise ValueError("Error: Cannot user both --dir  and --file together")
     try:
+
+        args, _ = parser.parse_known_args()
+
+        if not args.dir and not args.file:
+            raise ValueError("Error: Either --dir or --file must be provided.")
+        if args.dir and args.file:
+            raise ValueError("Error: Cannot user both --dir  and --file together")
+
         app = AnadiApp()
         if args.dir:
             app.init(args.dir, os.path.abspath(os.path.expanduser(ANADI_CONF_FILE)))
             app.run()
-        elif args.file and args.query:
+        elif args.file:
             csvdb = CSVDB()
             csvdb.load(args.file, SettingsDB())
-            result = csvdb.raw_sql(args.query)
-            print(result)
+
+            if args.query:
+                result = csvdb.raw_sql(args.query)
+                print(result)
+            if args.tableschema:
+                tablename = csvdb.table_name()
+
+                schema = csvdb.get_schema()
+                print(f"Tablename: {tablename}")
+                print(schema)
 
     except Exception as ex:
         print(ex)

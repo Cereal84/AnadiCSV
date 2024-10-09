@@ -2,6 +2,16 @@
 
 Please make sure to to the following guidelines to the best.
 
+
+## Modify the CLI command
+
+If you're working on some CLI option/argument please be aware that the tool is thinked to be working
+via Docker/Podman so you have to work both on python arguments (_argparse_) and _anadi.sh_ script.
+
+In _anadi.sh_ please follow the method already used unless you have better method, in that case I'm 
+really happy to learn from you a new thing.
+
+
 ## Code quality
 
 Due I'm a 'dirty' developer in order to force me to have at least some code quality standard I

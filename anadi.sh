@@ -54,16 +54,16 @@ fi
 
 
 # Get the options
-while getopts "c:d:f:q:h" option; do
+while getopts "c:d:f:q:t:h" option; do
    case $option in
       h) # display Help
          help
          exit;;
       c) CONF_PATH="$OPTARG";;
       d) DATA_PATH="$(realpath $OPTARG)";;
-      f) FILENAME="$(realpath $OPTARG)";;
-      q) QUERY_OPT="--query $OPTARG";;
-      t) SCHEMA_OPT="-t"
+      f) FILE_PATH="$(realpath $OPTARG)";;
+      q) QUERY_OPT="--query=$OPTARG";;
+      t) SCHEMA_OPT="--tableschema"
    esac
 done
 
@@ -104,7 +104,7 @@ if [ ! -z "$FILE_PATH" ]; then
     fi
 
     FILENAME=$(basename $FILE_PATH)
-    FILE_OPT="--file /data/$FILENAME"
+    FILE_OPT="--file=/data/$FILENAME"
     # we mount the correct directory
     DATA_PATH=$(dirname $FILE_PATH)
     # --dir cannot be used if -f is set
@@ -116,6 +116,4 @@ if [ "$ENGINE" = "docker" ]; then
     docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
 else
     podman run -it -v "$CONF_PATH":/root/.config/anadi:z -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
-
-
 fi

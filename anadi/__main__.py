@@ -17,16 +17,17 @@ parser.add_argument("-t", "--tableschema", action='store_true', help="Show the s
 
 
 def run():
-    args = parser.parse_args()
 
     try:
+
+        args, _ = parser.parse_known_args()
+
         if not args.dir and not args.file:
             raise ValueError(
                 "Error: Either --dir or --file must be provided."
             )
         if args.dir and args.file:
             raise ValueError("Error: Cannot user both --dir  and --file together")
-
 
         app = AnadiApp()
         if args.dir:

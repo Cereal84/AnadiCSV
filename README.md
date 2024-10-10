@@ -66,13 +66,29 @@ It is possible to run a query for a specific CSV file directly via terminal/shel
 without the TUI (Textual User Interface).
 
 ```shell
-anadi -f ./data/measuremens.csv -q "SELECT temperature FROM tablename"
+anadi -f measurements.csv -q "SELECT * FROM tablename"
++------------+-------------+------------+--------------+
+|    date    | temperature | wind_speed | air_pressure |
++------------+-------------+------------+--------------+
+| 2024-01-01 |      16     |    0.0     |     1000     |
+| 2024-01-02 |      15     |    0.0     |     1010     |
+| 2024-01-03 |      16     |    0.1     |     1020     |
++------------+-------------+------------+--------------+
 ```
 
 #### See CSV File Table schema via terminal
 
 ```shell
-anadi -f ./data/measuremens.csv -t
+anadi -f measurements.csv -t
+Tablename: tablename
++--------------+-------------+------+------+---------+-------+
+| column_name  | column_type | null | key  | default | extra |
++--------------+-------------+------+------+---------+-------+
+|     date     |     DATE    | YES  | None |   None  |  None |
+| temperature  |    BIGINT   | YES  | None |   None  |  None |
+|  wind_speed  |    DOUBLE   | YES  | None |   None  |  None |
+| air_pressure |    BIGINT   | YES  | None |   None  |  None |
++--------------+-------------+------+------+---------+-------+
 ```
 
 

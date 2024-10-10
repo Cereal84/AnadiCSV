@@ -33,13 +33,16 @@ $ sudo ./install.sh
 
 ```shell
 $ anadi -h
-usage: AnadiCSV [-h] -d DIR
+Anadi.
 
-Handle csv file using SQL language
-
+Syntax: anadi [-c|h|-d|-f|-q|-t]
 options:
-  -h, --help         show this help message and exit
-  -d DIR, --dir DIR  CSV file dir
+h         Print this Help.
+c  PATH       Specify the settings file location.
+d  PATH       Specify the data location. The default is the current directory.
+f  FILE_PATH  Specify the filename which you want to know the schema or execute a query
+q  SQL_QUERY  Specify the query you want to execute on file specified by -f FILE_PATH
+t             Show the table schema of the CSV file passed via -f FILE_PATH
 ```
 
 ### How to run

@@ -60,13 +60,15 @@ if your files are in a different location use *-d* options
 anadi -d DATA_DIR
 ```
 
+**[NOTE]** The table name is the filename without extension.
+
 #### Run query via terminal
 
 It is possible to run a query for a specific CSV file directly via terminal/shell 
 without the TUI (Textual User Interface).
 
 ```shell
-anadi -f measurements.csv -q "SELECT * FROM tablename"
+anadi -f measurements.csv -q "SELECT * FROM measurements"
 +------------+-------------+------------+--------------+
 |    date    | temperature | wind_speed | air_pressure |
 +------------+-------------+------------+--------------+
@@ -80,7 +82,7 @@ anadi -f measurements.csv -q "SELECT * FROM tablename"
 
 ```shell
 anadi -f measurements.csv -t
-Tablename: tablename
+Tablename: measurements
 +--------------+-------------+------+------+---------+-------+
 | column_name  | column_type | null | key  | default | extra |
 +--------------+-------------+------+------+---------+-------+
@@ -98,11 +100,6 @@ Tablename: tablename
 
 In this tab you can set how to interprete the CSV file.
 
-#### Tablename
-
-It is the name used in 'FROM' keyword inside the query to refer to the table.
-
-Default: *tablename*.
 
 #### CSV Delimitator
 

@@ -39,13 +39,11 @@ def run():
         elif args.file:
             csvdb = CSVDB()
             csvdb.load(args.file, SettingsDB())
-
             if args.query:
                 result = csvdb.raw_sql(args.query)
                 print(result)
             if args.tableschema:
                 tablename = csvdb.table_name()
-
                 schema = csvdb.get_schema()
                 print(f"Tablename: {tablename}")
                 print(schema)

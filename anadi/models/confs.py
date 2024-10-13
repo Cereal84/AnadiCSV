@@ -79,7 +79,6 @@ class ConfDuckDB(BaseModel):
 
 class SettingsDB(BaseModel):
 
-    table_name: str = "tablename"
     conf: ConfDuckDB = ConfDuckDB()
 
     @classmethod

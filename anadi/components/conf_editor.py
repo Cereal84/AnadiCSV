@@ -11,8 +11,6 @@ from anadi.constants import ANADI_CUSTOM_CONFS, ANADI_DEFAULT_CONF_FILE
 from anadi.modals.save_as import SaveAsModal
 from anadi.models.confs import SettingsDB
 
-INPUT_TABLE_NAME_ID = "table_name_input"
-
 
 class EventCSVConfAssociationChanged(Message):
     """This message is used as Event in order to say to the APP
@@ -75,15 +73,6 @@ class ConfEditorWidget(Static):
             ),
             Vertical(
                 Horizontal(
-                    Label("Table name", classes="label_switch"),
-                    Input(
-                        placeholder="tablename",
-                        type="text",
-                        id=INPUT_TABLE_NAME_ID,
-                        disabled=True,
-                    ),
-                ),
-                Horizontal(
                     Label("CSV Delimitator", classes="label_switch"),
                     Input(id="delim", type="text", disabled=True),
                 ),
@@ -141,10 +130,6 @@ class ConfEditorWidget(Static):
         # load conf
         data = SettingsDB.load_file(os.path.join(self._dir, self._filename))
 
-        # table_name
-        tablename = self.query_one(f"#{INPUT_TABLE_NAME_ID}", Input)
-        tablename.value = data.table_name
-
         # delimitator
         delim = self.query_one("#delim", Input)
         delim.value = data.conf.delim
@@ -194,7 +179,6 @@ class ConfEditorWidget(Static):
 
     def _get_conf_data(self):
         new_data = SettingsDB()
-        new_data.table_name = self.query_one(f"#{INPUT_TABLE_NAME_ID}", Input).value
         new_data.conf.header = self.query_one("#header", Switch).value
         new_data.conf.skip = self.query_one("#skip_input", Input).value
         new_data.conf.delim = self.query_one("#delim", Input).value
@@ -243,7 +227,6 @@ class ConfEditorWidget(Static):
         self._toggle_button("btn_edit")
 
         # enable input and switch elements
-        self._enable_input(INPUT_TABLE_NAME_ID)
         self._enable_input("skip_input")
         self._enable_input("delim")
 
@@ -258,7 +241,6 @@ class ConfEditorWidget(Static):
         self._toggle_button("btn_edit")
 
         # enable input and switch elements
-        self._disable_input(INPUT_TABLE_NAME_ID)
         self._disable_input("skip_input")
         self._disable_input("delim")
 

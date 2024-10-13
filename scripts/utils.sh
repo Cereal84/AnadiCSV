@@ -16,7 +16,7 @@ am_i_root() {
 }
 
 
-function check_requirements() {
+check_requirements() {
 
     # we need super-user privileges in order to
     # copy the anadi.sh file into /usr/local/bin directory
@@ -42,7 +42,7 @@ function check_requirements() {
 }
 
 
-function build_image() {
+build_image() {
 
     # $1 is the OS
     # $2 is the engine 'docker' or 'podman'

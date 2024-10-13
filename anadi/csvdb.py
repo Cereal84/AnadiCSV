@@ -1,4 +1,5 @@
 import inspect
+import os
 from typing import List
 
 import duckdb
@@ -20,7 +21,8 @@ class CSVDB:
 
     def load(self, filename: str, conf: SettingsDB):
         self._filename = filename
-        self._table_name = conf.table_name
+        # get tablename from filename
+        self._table_name = os.path.splitext(os.path.basename(filename))[0]
         self._conf = conf.conf
         self._import_csv()
 

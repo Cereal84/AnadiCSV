@@ -89,7 +89,7 @@ if [ ! -d "$DATA_PATH" ]; then
     echo "The data directory '$DATA_PATH' does not exists."
     exit 1
 else
-    DATA_PATH_OPT="--dir /data/"
+    DATA_PATH_OPT="--dir=/data/"
 fi
 
 # handle -f FILENAME
@@ -111,9 +111,8 @@ if [ ! -z "$FILE_PATH" ]; then
     DATA_PATH_OPT=""
 fi
 
-
 if [ "$ENGINE" = "docker" ]; then
-    docker run -it -v "$CONF_PATH":/root/.config/anadi -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
+    docker run -it -v "$CONF_PATH":/root/.config/anadi:rw -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
 else
-    podman run -it -v "$CONF_PATH":/root/.config/anadi:z -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
+    podman run -it -v "$CONF_PATH":/root/.config/anadi:rw -v "$DATA_PATH":/data/ anadi:latest "$DATA_PATH_OPT" "$FILE_OPT" "$QUERY_OPT" "$SCHEMA_OPT"
 fi

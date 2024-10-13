@@ -10,7 +10,8 @@ import re
 from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Vertical
-from textual.widgets import Button, DataTable, Footer, Header, Label, Rule, TextArea
+from textual.widgets import (Button, DataTable, Footer, Header, Label, Rule,
+                             TextArea)
 
 from anadi.components.conf_editor import EventCSVConfAssociationChanged
 from anadi.components.csvtree import CSVTree

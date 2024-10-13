@@ -4,11 +4,8 @@ from typing import List, Optional
 
 from pydantic import BaseModel, validator
 
-from anadi.constants import (
-    ANADI_DEFAULT_CONF_FILE,
-    ANADI_HISTORY_FILE,
-    ANADI_RESULTS_DIR,
-)
+from anadi.constants import (ANADI_DEFAULT_CONF_FILE, ANADI_HISTORY_FILE,
+                             ANADI_RESULTS_DIR)
 
 
 class HistoryConf(BaseModel):

@@ -5,8 +5,7 @@ from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
 from textual.message import Message
 from textual.validation import Number, ValidationResult, Validator
-from textual.widgets import (Button, Input, Label, Rule, Select, Static,
-                             Switch, TextArea)
+from textual.widgets import Button, Input, Label, Rule, Select, Static, Switch, TextArea
 
 from anadi.constants import ANADI_CUSTOM_CONFS, ANADI_DEFAULT_CONF_FILE
 from anadi.modals.save_as import SaveAsModal

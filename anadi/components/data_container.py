@@ -3,8 +3,15 @@ import os
 from textual import on
 from textual.app import ComposeResult
 from textual.containers import Horizontal, Vertical
-from textual.widgets import (Button, DataTable, Label, Rule, Static,
-                             TabbedContent, TabPane)
+from textual.widgets import (
+    Button,
+    DataTable,
+    Label,
+    Rule,
+    Static,
+    TabbedContent,
+    TabPane,
+)
 
 from anadi.components.conf_editor import ConfEditorWidget
 from anadi.components.settings import SettingsWidget

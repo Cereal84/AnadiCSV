@@ -3,6 +3,8 @@
 # -- colors
 Red='\033[0;31m'
 Green='\033[0;32m'
+Yellow='\033[0;33m'
+Cyan='\033[0;36m'
 NC='\033[0m'
 
 ENGINE=""
@@ -52,6 +54,7 @@ build_image() {
     container_file="./Dockerfile"
     build_status="1"
 
+
     # for OSX there is no pre-compiled duckdb so we need to use a different
     # Dockerfile
     if [ "$os" = "OSX" ]; then 
@@ -62,20 +65,31 @@ build_image() {
     echo -e "File: ${Green}${container_file}${NC}"
 
     if [ "$container_engine" = "docker" ]; then
-        if ! docker build -f $container_file -t anadi .; then
-            build_status="0"
-        fi
-    fi
-    if [ "$container_engine" = "podman" ]; then
-        if ! podman build -f $container_file -t anadi; then
-            build_status="0"
+
+        if [ -z "$(docker images -q anadi:latest)" ]; then
+            if ! docker build -f $container_file -t anadi .; then
+                build_status="0"
+            fi
+        else
+            build_status="2"
         fi
     fi
 
-    if [ "$build_status" = "0" ]; then
-        echo -e "Image Build: ${Red}FAIL${NC}"
-        exit 1
+
+    if [ "$container_engine" = "podman" ]; then
+        if [ -z "$(podman images -q anadi:latest)" ]; then
+            if ! podman build -f $container_file -t anadi; then
+                build_status="0"
+            fi
+        else
+           build_status="2"
+        fi
     fi
-    echo -e "Image Build: ${Green}SUCCESS${NC}"
+
+    case $build_status in
+        0) echo -e "Image Build: ${Red}FAIL${NC}";;
+        1) echo -e "Image Build: ${Green}SUCCESS${NC}";;
+        2) echo -e "Image:  ${Yellow}Already Exists${NC}";;
+    esac
 }
 

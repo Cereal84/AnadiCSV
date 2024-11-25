@@ -11,9 +11,12 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.containers import Vertical
 from textual.widgets import Button, DataTable, Footer, Header, Label, Rule, TextArea
+from textual.widgets import SelectionList
+
+
 
 from anadi.components.conf_editor import EventCSVConfAssociationChanged
-from anadi.components.csvtree import CSVTree
+from anadi.components.csvtree import CSVTree, CSVMultiSelect
 from anadi.components.data_container import DataContainer
 from anadi.constants import *
 from anadi.csvdb import CSVDB
@@ -45,6 +48,9 @@ class AnadiApp(App):
         self._csv_selected = ""
         self._csvdb = CSVDB()
         self._cmd_history = []
+        self._csvfiles = []
+
+        self._get_csv_files()
         self._load_history()
 
     def _check_init_fs(self):
@@ -70,6 +76,19 @@ class AnadiApp(App):
 
         with open(self._conf.history.filename, "r") as historyfile:
             self._cmd_history = json.load(historyfile)
+
+    def _get_csv_files(self):
+        """ Given a path retrieves all the csv files, these files
+            will be visualized in a SelectionList so each item
+            is a tuple with fname, pathfilename.
+            NOTE: This logic males sense only if there is no
+                  sub directory.
+        """
+        for fname in os.listdir(self._csv_dir):
+            abs_fname = os.path.join(self._csv_dir, fname)
+            if os.path.isfile(abs_fname) and abs_fname.endswith(".csv"):
+                self._csvfiles.append((fname, abs_fname))
+
 
     def _get_conf_file_for_csv(self) -> str:
         # from file get custom DBConf
@@ -100,21 +119,22 @@ class AnadiApp(App):
 
         data_container = self.query_one("#data_container", DataContainer)
 
-        csv_tree = self.query_one("#flist", CSVTree)
+        #csv_tree = self.query_one("#flist", CSVTree)
+        csv_tree = self.query_one("#flist", SelectionList)
         csv_tree.border_title = "CSV Files"
+        csv_tree.add_options(self._csvfiles)
 
-        schema = self.query_one("#table_schema", DataTable)
-        schema.border_title = "Table Schema"
+        tables = self.query_one("#tables", DataTable)
+        tables.border_title = "Tables"
 
     def compose(self) -> ComposeResult:
         """Create child widgets for the app."""
         yield Header()
         yield Vertical(
-            CSVTree(self._csv_dir, id="flist", classes="box_csv_tree"),
-            Rule(),
-            Label("Table: None", id="table_name"),
-            Rule(),
-            DataTable(id="table_schema", classes="box_schema", zebra_stripes=True),
+            #CSVTree(self._csv_dir, id="flist", classes="box_csv_tree"),
+            SelectionList[str](id="flist", classes="box_csv_tree"),
+            # CSVMultiSelect(id="flist", classes="box_csv_tree"),
+            DataTable(id="tables", classes="box_schema", zebra_stripes=True),
             classes="sidebar",
         )
         yield DataContainer("", classes="box", id="data_container")
@@ -177,6 +197,23 @@ class AnadiApp(App):
 
         data_container = self.query_one("#data_container", DataContainer)
         data_container.enable_sql_editor()
+
+
+    @on(SelectionList.SelectionToggled, "#flist")
+    def update_selected_view(self, msg) -> None:
+
+        # - get the index of entry which is toggled
+        # - if selected
+        #     - upload the 'tables' widget with the new table
+        #     - load the csv into a DuckDB table
+        # - else (not selected)
+        #     - delete the table name from 'tables' widget
+        #     - drop the table from DuckDB
+        fname = msg.selection_list.get_option_at_index(msg.selection_index).value
+        if fname in msg.selection_list.selected:
+            self.notify(f"Entry {msg.selection_index} {fname} selected") 
+        else:
+            self.notify(f"Entry {msg.selection_index} {fname} unselected")
 
     @on(Button.Pressed, "#btn_run")
     def onclick_btn_run(self):
